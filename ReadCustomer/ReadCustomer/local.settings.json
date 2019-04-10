@@ -1,0 +1,8 @@
+{
+    "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "AzureWebJobsDashboard": "UseDevelopmentStorage=true",
+    "sbcon": "Endpoint=sb://customerservice01.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=7cY5coczBuDMX0Rh81kzGEWjMn1E7YT8MAUrMTnSsL0="
+  }
+}
