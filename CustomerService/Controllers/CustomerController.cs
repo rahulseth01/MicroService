@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CustomerService.Models;
 using CustomerService.Repositories;
+using CustomerService.CommandHandlers;
+using CustomerService.Commands;
 
 namespace CustomerService.Controllers
 {
@@ -13,9 +15,11 @@ namespace CustomerService.Controllers
     public class CustomerController : ControllerBase
     {
         ICustomerRepository _repo;
-        public CustomerController(ICustomerRepository repo)
+        ICustomerCommandHandler _handler;
+        public CustomerController(ICustomerRepository repo, ICustomerCommandHandler handler)
         {
             _repo = repo;
+            _handler = handler;
         }
         // GET api/values
         [HttpGet]
@@ -33,10 +37,10 @@ namespace CustomerService.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<ActionResult<Users>> Post([FromBody] Users value)
+        public async Task<ActionResult<Users>> Post([FromBody] CustomerCreatedCommand value)
         {
-            var u = await _repo.NewUsers(value);
-            return Ok(u);
+            _handler.HandleCustomerCreated(value);
+            return Ok();
         }
 
         // PUT api/values/5

@@ -11,7 +11,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using CustomerService.Models;
 using CustomerService.Repositories;
+using CustomerService.CommandHandlers;
+using CustomerService.Commands;
 using Microsoft.EntityFrameworkCore;
+using CustomerService.Events;
+using CustomerService.Entities;
 
 namespace CustomerService
 {
@@ -30,6 +34,10 @@ namespace CustomerService
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddEntityFrameworkSqlServer().AddDbContext<devcustomerserverContext>(options => options.UseSqlServer(Configuration.GetConnectionString("customerconnection")));
             services.AddScoped<ICustomerRepository,CustomerRepository>();
+            services.AddScoped<ICustomerCommand,CustomerCreatedCommand>();
+            services.AddScoped<ICustomerCommandHandler, CustomerCommandHandler>();
+            services.AddScoped<IEvents, CustomerCreatedEvents>();
+            services.AddScoped<Entity, CustomerEntity>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
